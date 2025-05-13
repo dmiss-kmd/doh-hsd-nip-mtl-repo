@@ -1,0 +1,50 @@
+config {
+    type: "table", // Creates a table in BigQuery.
+    schema: "nip_mtl_source", // Specify the dataset
+    bigquery: {
+      partitionBy: "extract_date",
+      clusterBy: ["provhuc_psgc", "productcode"]
+    },
+    columns: {
+        extract_date: tbldef.extract_date,
+        region_psgc: tbldef.region_psgc,
+        region: tbldef.region,
+        provhuc_psgc:  tbldef.provhuc_psgc,
+        prov_huc:  tbldef.prov_huc,
+        warehousecode: tbldef.warehousecode,
+        warehousename: tbldef.warehousename,
+        productcode: tbldef.productcode,
+        vaxtype: tbldef.vaxtype,
+        productdesc: tbldef.productdesc,
+        lotno: tbldef.lotno,
+        expiry_date: tbldef.expiry_date,
+        balanceqty: tbldef.balanceqty,
+        qtyindoses:  tbldef.qtyindoses,
+        rowhash: tbldef.rowhash
+    }
+}
+
+  -- This is an example SQLX file to help you learn the basics of Dataform.
+  -- Visit https://cloud.google.com/dataform/docs/sql-workflows for more information on how to configure your SQL workflow.
+  -- You can delete this file, then commit and push your changes to your repository when you are ready.
+  -- Config blocks allow you to configure, document, and test your data assets.
+  -- The rest of a SQLX file contains your SELECT statement used to create the table.
+  -- SELECT 1 as test
+SELECT
+  DATE(PARSE_DATE("%Y-%b-%d",`date`)) AS extract_date,
+  region_psgc,
+  region,
+  provhuc_psgc,
+  prov_huc,
+  warehousecode,
+  warehousename,
+  productcode,
+  vaxtype,
+  productdesc,
+  lotno,
+  DATE(PARSE_DATE("%Y-%b-%d",expiry)) AS expiry_date,
+  balanceqty,
+  qtyindoses,
+  SHA1( CONCAT( IFNULL(`date`,""), IFNULL(region_psgc,""), IFNULL(region,""), IFNULL(provhuc_psgc,""), IFNULL(prov_huc,""), IFNULL(warehousecode,""), IFNULL(warehousename,""), IFNULL(productcode,""), IFNULL(vaxtype,""), IFNULL(productdesc,""), IFNULL(lotno,""), IFNULL(expiry,""), IFNULL(balanceqty,0), IFNULL(qtyindoses,0)) ) AS rowhash
+FROM
+  ${ref("tbl_prov_inv_staging")}

@@ -1,6 +1,7 @@
 config {
     type: "table", // Creates a view in BigQuery. Try changing to "table" instead.
-     schema: "nip_mtl_source", // Specify the dataset
+    name: "tbl_chd_inv_trans",
+    schema: "nip_mtl_source", // Specify the dataset
     bigquery: {
       partitionBy: "extract_date",
       clusterBy: ["warehousecode", "productcode"]
@@ -21,7 +22,6 @@ config {
         balanceqty: tbldef.balanceqty,
         qtyindoses:  tbldef.qtyindoses, 
         rowhash: tbldef.rowhash
-
     }
 }
 

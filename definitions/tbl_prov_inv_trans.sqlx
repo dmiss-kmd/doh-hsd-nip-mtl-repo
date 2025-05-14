@@ -1,5 +1,6 @@
 config {
     type: "table", // Creates a table in BigQuery.
+    name: "tbl_prov_inv_trans",
     schema: "nip_mtl_source", // Specify the dataset
     bigquery: {
       partitionBy: "extract_date",

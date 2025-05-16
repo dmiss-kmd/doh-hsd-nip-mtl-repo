@@ -30,7 +30,6 @@ config {
   -- You can delete this file, then commit and push your changes to your repository when you are ready.
   -- Config blocks allow you to configure, document, and test your data assets.
   -- The rest of a SQLX file contains your SELECT statement used to create the table.
-  -- SELECT 1 as test
 SELECT
   DATE(PARSE_DATE("%Y-%b-%d",`date`)) AS extract_date,
   region_psgc,

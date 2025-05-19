@@ -4,7 +4,7 @@ config {
     schema: "nip_mtl_source", // Specify the dataset
     bigquery: {
       partitionBy: "extract_date",
-      clusterBy: ["warehousecode", "productcode"]
+      clusterBy: ["warehousecode", "vaxtype", "lotno"]
     },
     columns: {
         extract_date: tbldef.extract_date,

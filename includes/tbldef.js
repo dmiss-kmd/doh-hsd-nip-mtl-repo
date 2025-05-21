@@ -12,6 +12,7 @@ const lotno = `Lot Number`;
 const expiry_date = `Expiry Date`;
 const balanceqty = `Remaining quantity`;
 const available_doses = `Remaining quantity in doses`;
+const days_to_expire = `Number of days before the item expires`
 const rowhash   = `md1 hash of all data fields concatenated`;
 
 module.exports = {

@@ -30,5 +30,6 @@ module.exports = {
     expiry_date,
     balanceqty,
     available_doses,
+    days_to_expire,
     rowhash
 };

@@ -20,7 +20,7 @@ config {
         lotno: tbldef.lotno,
         expiry_date: tbldef.expiry_date,
         balanceqty: tbldef.balanceqty,
-        available_doses:  tbldef.qtyindoses, 
+        available_doses:  tbldef.available_doses, 
         days_to_expire: tbldef.days_to_expire,
         rowhash: tbldef.rowhash
     }
@@ -48,8 +48,7 @@ chd_trans as
     lotno,
     SAFE_CAST(PARSE_DATE("%Y-%b-%d",expiry_date) AS date) AS expiry_date,
     SUM(balanceqty) as balanceqty,
-    SUM(qtyindoses) AS available_doses,
-    -- DATE_DIFF(SAFE_CAST(PARSE_DATE("%Y-%b-%d",expiry_date) AS date), SAFE_CAST(PARSE_DATE("%Y-%b-%d",extracted_date) AS date), DAY) AS months_to_expire
+    SUM(qtyindoses) AS available_doses
   FROM
     ${ref("tbl_chd_inv_staging")}
   GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12
@@ -57,6 +56,6 @@ chd_trans as
 
 SELECT
   *,
---   date_diff(expiry_date, extract_date,  DAY) days_to_expire,
---   SHA1( CONCAT( IFNULL(safe_cast(extract_date as STRING),""), IFNULL(region_psgc,""), IFNULL(region,""), IFNULL(provhuc_psgc,""), IFNULL(prov_huc,""), IFNULL(warehousecode,""), IFNULL(warehousename,""), IFNULL(vaxtype,""), IFNULL(productcode,""), IFNULL(vaxtype,""), IFNULL(productdesc,""), IFNULL(lotno,""), IFNULL(safe_cast(expiry_date as string),""), IFNULL(balanceqty,0), IFNULL(available_doses,0)) ) AS rowhash
+  date_diff(expiry_date, extract_date,  DAY) days_to_expire,
+  SHA1( CONCAT( IFNULL(safe_cast(extract_date as STRING),""), IFNULL(region_psgc,""), IFNULL(region,""), IFNULL(provhuc_psgc,""), IFNULL(prov_huc,""), IFNULL(warehousecode,""), IFNULL(warehousename,""), IFNULL(vaxtype,""), IFNULL(productcode,""), IFNULL(vaxtype,""), IFNULL(productdesc,""), IFNULL(lotno,""), IFNULL(safe_cast(expiry_date as string),""), IFNULL(balanceqty,0), IFNULL(available_doses,0)) ) AS rowhash
 FROM chd_trans

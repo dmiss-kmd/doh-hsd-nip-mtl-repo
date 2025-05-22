@@ -15,6 +15,12 @@ const available_doses = `Remaining quantity in doses`;
 const days_to_expire = `Number of days before the item expires`;
 const rowhash   = `md1 hash of all data fields concatenated`;
 
+const annual_required_dose = `Annual required doses of antigen`;	
+const monthly_required_dose = `Monthly required doses of antigen`;	
+	
+const MTL = `Months to Last`;	
+
+
 module.exports = {
     extract_date,
     region_psgc,
@@ -31,5 +37,8 @@ module.exports = {
     balanceqty,
     available_doses,
     days_to_expire,
-    rowhash
+    rowhash,
+    annual_required_dose,
+    monthly_required_dose,
+    MTL
 };

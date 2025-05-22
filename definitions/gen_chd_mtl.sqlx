@@ -12,6 +12,7 @@ config {
         warehousecode: tbldef.warehousecode,
         // warehousename: tbldef.warehousename,
         vaxtype: tbldef.vaxtype,
+        annual_required_dose: tbldef.annual_required_dose,
         monthly_required_dose: tbldef.monthly_required_dose,
         // productcode: tbldef.productcode,
         // productdesc: tbldef.productdesc,

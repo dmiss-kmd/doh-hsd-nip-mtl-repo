@@ -1,5 +1,5 @@
 config {
-    type: "table", // Creates a table in BigQuery.
+    type: "incremental", // Creates a table in BigQuery.
     name: "tbl_prov_inv_trans",
     schema: "nip_mtl_staging", // Specify the dataset
     bigquery: {

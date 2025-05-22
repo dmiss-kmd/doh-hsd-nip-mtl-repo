@@ -1,5 +1,5 @@
 config {
-    type: "table", //Try changing to "table" instead.
+    type: "incremental", //Try changing to "table" instead.
     name: "tbl_chd_inv_trans",
     schema: "nip_mtl_staging", // Specify the dataset
     bigquery: {

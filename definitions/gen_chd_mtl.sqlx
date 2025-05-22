@@ -1,0 +1,42 @@
+config {
+    type: "view",
+    name: "vw_chd_mtl", //name of view
+    schema: "nip_mtl_staging", //dataset
+    dependencies: ["tbl_chd_annual_req","tbl_chd_inv_trans"], //dependency tables
+    columns: {
+        // extract_date: tbldef.extract_date,
+        // region_psgc: tbldef.region_psgc,
+        // region: tbldef.region,
+        // provhuc_psgc:  tbldef.provhuc_psgc,
+        // prov_huc:  tbldef.prov_huc,
+        // warehousecode: tbldef.warehousecode,
+        // warehousename: tbldef.warehousename,
+        // vaxtype: tbldef.vaxtype,
+        // productcode: tbldef.productcode,
+        // productdesc: tbldef.productdesc,
+        // lotno: tbldef.lotno,
+        // expiry_date: tbldef.expiry_date,
+        // balanceqty: tbldef.balanceqty,
+        // available_doses:  tbldef.available_doses, 
+        // days_to_expire: tbldef.days_to_expire,
+        // rowhash: tbldef.rowhash
+    }
+}
+
+SELECT
+    a.warehousecode,
+    -- UPPER(TRIM(a.warehousename)) AS warehousename,
+    a.vaxtype,
+    a.qtyindoses AS annual_required_dose,
+    ROUND((a.qtyindoses/12),1) as monthly_required_dose,
+    b.lotno,
+    b.extract_date,
+    b.expiry_date,
+    b.available_doses,
+    nip_mtl_source.compute_mtl2(b.available_doses, a.qtyindoses, b.expiry_date, b.extract_date) AS MTL,
+    b.days_to_expire
+FROM
+    ${ref("tbl_chd_annual_req")} a
+LEFT JOIN ${ref("tbl_chd_inv_trans")} b
+ON a.warehousecode = b.warehousecode
+AND a.vaxtype = b.vaxtype

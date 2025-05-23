@@ -37,7 +37,7 @@ SELECT
     b.extract_date,
     b.expiry_date,
     b.available_doses,
-    nip_mtl_source.compute_mtl2(b.available_doses, a.qtyindoses, b.expiry_date, b.extract_date) AS MTL,
+    nip_mtl_staging.compute_mtl(b.available_doses, a.qtyindoses, b.expiry_date, b.extract_date) AS MTL,
     b.days_to_expire
 FROM
     ${ref("tbl_chd_annual_req")} a

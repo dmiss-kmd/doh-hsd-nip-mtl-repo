@@ -1,0 +1,29 @@
+config {
+  type: "table",
+  schema: "nip_mtl_staging",
+  name: "tbl_dim_provcity", // Temporary name
+  columns: {
+      reg_psgc: 
+        {   
+          "displayName": "reg_psgc",
+          "description": "Region PSGC"
+        },
+      provcity_psgc: 
+        {
+          "displayName": "provcity_psgc",
+          "description": "PHI PSGC"
+        },
+      prov_name: 
+        {
+          "displayName": "provcity_name",
+          "description": "Province HUC ICC Name"
+        }
+    
+  }
+}
+
+SELECT
+  *
+FROM
+  `doh-hsd.cancer_source.dim_provcity`
+ORDER BY 1,2

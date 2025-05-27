@@ -7,13 +7,15 @@ config {
   {
     reg_psgc: {displayName: "reg_psgc", description: "Region PSGC"},
     provcity_psgc: {displayName: "provcity_psgc", description: "PHI PSGC"},
-    prov_name:  {displayName: "provcity_name", description: "Province HUC ICC Name"}
+    provcity_name:  {displayName: "provcity_name", description: "Province HUC ICC Name"}
     
   }
 }
 
 SELECT
-  *
+  reg_code as reg_psgc,
+  provcity_code as provcity_psgc,
+  provname as provcity_name
 FROM
   `doh-hsd.cancer_source.dim_provcity`
 ORDER BY 1,2

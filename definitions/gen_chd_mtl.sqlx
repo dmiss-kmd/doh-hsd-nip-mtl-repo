@@ -3,7 +3,7 @@ config {
     name: "vw_chd_mtl", //name of view
     schema: "nip_mtl_staging", //dataset
     assertions:{
-        nonNull: ["warehousecode"]
+        nonNull: ["warehousecode", "vaxtype"]
     },
     dependencies: ["tbl_chd_annual_req","tbl_chd_inv_trans"], //dependency tables
     columns: {

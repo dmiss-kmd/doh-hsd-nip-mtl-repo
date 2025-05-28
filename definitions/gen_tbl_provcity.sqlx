@@ -1,15 +1,18 @@
 config {
-  type: "table",
-  description: "Province HUC ICC PSGC Table",
-  schema: "nip_mtl_staging",
-  name: "tbl_dim_provcity",
-  columns: 
-  {
-    reg_psgc: {displayName: "reg_psgc", description: "Region PSGC"},
-    provcity_psgc: {displayName: "provcity_psgc", description: "PHI PSGC"},
-    provcity_name:  {displayName: "provcity_name", description: "Province HUC ICC Name"}
-    
-  }
+    type: "table",
+    description: "Province HUC ICC PSGC Table",
+    schema: "nip_mtl_staging",
+    name: "tbl_dim_provcity",
+    assertions:{
+        nonNull: ["reg_psgc", "provcity_psgc"],
+        rowConditions: ["LENGTH(provhuc_psgc) = 10"]
+    },
+    columns:{
+        reg_psgc: {displayName: "reg_psgc", description: "Region PSGC"},
+        provcity_psgc: {displayName: "provcity_psgc", description: "PHI PSGC"},
+        provcity_name:  {displayName: "provcity_name", description: "Province HUC ICC Name"}
+        
+    }
 }
 
 SELECT

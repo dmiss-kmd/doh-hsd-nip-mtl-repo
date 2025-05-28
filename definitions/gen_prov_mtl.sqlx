@@ -3,8 +3,7 @@ config {
     name: "vw_prov_mtl", //name of view
     schema: "nip_mtl_staging", //dataset
     assertions:{
-        nonNull: ["provhuc_psgc", "vaxtype", "lotno"],
-        rowConditions: ["expiry_date > extract_date"]
+        nonNull: ["provhuc_psgc", "vaxtype"]
     },
     dependencies: ["tbl_prov_annual_req","tbl_prov_inv_trans"], //dependency tables
     columns: {

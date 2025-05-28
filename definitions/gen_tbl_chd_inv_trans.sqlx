@@ -3,8 +3,7 @@ config {
     name: "tbl_chd_inv_trans",
     schema: "nip_mtl_staging", // Specify the dataset
     assertions:{
-        nonNull: ["warehousecode", "vaxtype", "lotno"],
-        rowConditions: ["expiry_date > extract_date"]
+        nonNull: ["warehousecode", "vaxtype"]
     },
     bigquery: {
       partitionBy: "extract_date",

@@ -5,7 +5,7 @@ config {
     name: "tbl_dim_provcity",
     assertions:{
         nonNull: ["reg_psgc", "provcity_psgc"],
-        rowConditions: ["LENGTH(provhuc_psgc) = 10"]
+        rowConditions: ["LENGTH(provcity_psgc) = 10 AND LENGTH(reg_psgc)"]
     },
     columns:{
         reg_psgc: {displayName: "reg_psgc", description: "Region PSGC"},

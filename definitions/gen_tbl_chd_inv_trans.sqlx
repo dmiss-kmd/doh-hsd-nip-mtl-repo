@@ -2,10 +2,14 @@ config {
     type: "incremental", //Try changing to "table" instead.
     name: "tbl_chd_inv_trans",
     schema: "nip_mtl_staging", // Specify the dataset
+    assertions:{
+        nonNull: ["warehousecode", "vaxtype"]
+    },
     bigquery: {
       partitionBy: "extract_date",
       clusterBy: ["warehousecode", "vaxtype", "lotno"]
     },
+   
     columns: {
         extract_date: tbldef.extract_date,
         region_psgc: tbldef.region_psgc,

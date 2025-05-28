@@ -2,6 +2,10 @@ config {
     type: "incremental", // Creates a table in BigQuery.
     name: "tbl_prov_inv_trans",
     schema: "nip_mtl_staging", // Specify the dataset
+    assertions:{
+        nonNull: ["provhuc_psgc", "vaxtype"],
+        rowConditions: ["LENGTH(provhuc_psgc) = 10"]
+    },
     bigquery: {
       partitionBy: "extract_date",
       clusterBy: ["provhuc_psgc", "vaxtype", "lotno"]

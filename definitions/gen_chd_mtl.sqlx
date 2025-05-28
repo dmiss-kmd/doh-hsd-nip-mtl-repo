@@ -2,6 +2,9 @@ config {
     type: "view",
     name: "vw_chd_mtl", //name of view
     schema: "nip_mtl_staging", //dataset
+    assertions:{
+        nonNull: ["warehousecode", "vaxtype", "lotno"]
+    },
     dependencies: ["tbl_chd_annual_req","tbl_chd_inv_trans"], //dependency tables
     columns: {
         // extract_date: tbldef.extract_date,

@@ -3,12 +3,11 @@ config {
     name: "tbl_chd_inv_raw",
     schema: "nip_mtl_staging", // Specify the dataset
     assertions:{
-        nonNull: ["warehousecode", "vaxtype"],
-        rowConditions: ["rowhash NOT IN (SELECT rowhash FROM nip_mtl_staging.tbl_chd_inv_raw)"
-        ,"vaxtype IN (SELECT vaxtype FROM nip_mtl_staging.tbl_vaxtype)"]
+        nonNull: ["warehousecode", "vaxtype", "extract_date"],
+        rowConditions: ["vaxtype IN (SELECT vaxtype FROM nip_mtl_staging.tbl_vaxtype)"]
     },
      bigquery: {
-      partitionBy: "extract_date",
+      partitionBy: "DATE_TRUNC(DATE(PARSE_DATE('%Y-%b-%d',extract_date)),MONTH)",
       clusterBy: ["warehousecode", "vaxtype", "lotno"]
     },
    

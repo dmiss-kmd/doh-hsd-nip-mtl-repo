@@ -5,8 +5,8 @@ config {
     dependencies: ['tbl_vaxtype'],
     assertions:{
         nonNull: ["warehousecode", "vaxtype", "extract_date"],
-        rowConditions: ["vaxtype NOT IN (SELECT vaxtype FROM nip_mtl_staging.tbl_vaxtype)"
-        ,"rowhash IN (SELECT rowhash from nip_mtl_staging.tbl_chd_inv_raw)"]
+        rowConditions: ["vaxtype IN (SELECT vaxtype FROM nip_mtl_staging.tbl_vaxtype)"
+        ,"rowhash NOT IN (SELECT rowhash from nip_mtl_staging.tbl_chd_inv_raw)"]
     },
      bigquery: {
       partitionBy: "extract_date",

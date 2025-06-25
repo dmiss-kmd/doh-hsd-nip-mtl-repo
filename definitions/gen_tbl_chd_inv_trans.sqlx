@@ -3,7 +3,8 @@ config {
     name: "tbl_chd_inv_trans",
     schema: "nip_mtl_staging", // Specify the dataset
     assertions:{
-        nonNull: ["warehousecode", "vaxtype"]
+        nonNull: ["warehousecode", "vaxtype"],
+        rowConditions: ["vaxtype IN (SELECT vaxtype FROM nip_mtl_staging.tbl_vaxtype)"]
     },
     bigquery: {
       partitionBy: "extract_date",
@@ -30,11 +31,6 @@ config {
     }
 }
 
-  -- This is an example SQLX file to help you learn the basics of Dataform.
-  -- Visit https://cloud.google.com/dataform/docs/sql-workflows for more information on how to configure your SQL workflow.
-  -- You can delete this file, then commit and push your changes to your repository when you are ready.
-  -- Config blocks allow you to configure, document, and test your data assets.
-  -- The rest of a SQLX file contains your SELECT statement used to create the table.
 WITH 
 chd_trans as
 (
@@ -54,7 +50,7 @@ chd_trans as
     SUM(balanceqty) as balanceqty,
     SUM(qtyindoses) AS available_doses
   FROM
-    ${ref("tbl_chd_inv_staging")}
+    ${ref("tbl_chd_inv_raw")}
   GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12
 )
 

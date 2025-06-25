@@ -4,7 +4,8 @@ config {
     schema: "nip_mtl_staging", // Specify the dataset
     assertions:{
         nonNull: ["provhuc_psgc", "vaxtype"],
-        rowConditions: ["LENGTH(provhuc_psgc) = 10"]
+        rowConditions: ["LENGTH(provhuc_psgc) = 10"
+        ,"vaxtype IN (SELECT vaxtype FROM nip_mtl_staging.tbl_vaxtype)"]
     },
     bigquery: {
       partitionBy: "extract_date",
@@ -30,11 +31,6 @@ config {
     }
 }
 
-  -- This is an example SQLX file to help you learn the basics of Dataform.
-  -- Visit https://cloud.google.com/dataform/docs/sql-workflows for more information on how to configure your SQL workflow.
-  -- You can delete this file, then commit and push your changes to your repository when you are ready.
-  -- Config blocks allow you to configure, document, and test your data assets.
-  -- The rest of a SQLX file contains your SELECT statement used to create the table.
 WITH 
 prov_trans as
 (

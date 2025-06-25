@@ -33,7 +33,7 @@ config {
 
 
 WITH 
-chd_trans as
+chd_raw as
 (
   SELECT
     extract_date,
@@ -57,4 +57,4 @@ chd_trans as
 SELECT
   *,
   SHA1( CONCAT( IFNULL(safe_cast(extract_date as STRING),""), IFNULL(region_psgc,""), IFNULL(region,""), IFNULL(provhuc_psgc,""), IFNULL(prov_huc,""), IFNULL(warehousecode,""), IFNULL(warehousename,""), IFNULL(vaxtype,""), IFNULL(productcode,""), IFNULL(vaxtype,""), IFNULL(productdesc,""), IFNULL(lotno,""), IFNULL(safe_cast(expiry_date as string),""), IFNULL(balanceqty,0), IFNULL(qtyindoses,0)) ) AS rowhash
-FROM chd_trans
+FROM chd_raw

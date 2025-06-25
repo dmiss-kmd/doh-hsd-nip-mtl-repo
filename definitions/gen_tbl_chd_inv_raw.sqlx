@@ -2,6 +2,7 @@ config {
     type: "incremental", //Try changing to "table" instead.
     name: "tbl_chd_inv_raw",
     schema: "nip_mtl_staging", // Specify the dataset
+    dependencies: ['tbl_vaxtype'],
     assertions:{
         nonNull: ["warehousecode", "vaxtype", "extract_date"],
         rowConditions: ["vaxtype IN (SELECT vaxtype FROM nip_mtl_staging.tbl_vaxtype)"

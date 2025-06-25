@@ -7,7 +7,7 @@ config {
         rowConditions: ["vaxtype IN (SELECT vaxtype FROM nip_mtl_staging.tbl_vaxtype)"]
     },
     bigquery: {
-      partitionBy: "CAST(PARSE_DATE('%Y-%b-%d',extract_date) AS date)",
+      partitionBy: "DATE_TRUNC(CAST(PARSE_DATE('%Y-%b-%d',extract_date) AS date), MONTH)",
       clusterBy: ["warehousecode", "vaxtype", "lotno"]
     },
    

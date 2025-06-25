@@ -36,7 +36,6 @@ WITH
 chd_raw as
 (
   SELECT
-    _PARTITIONTIME,
     extract_date,
     region_psgc,
     region,

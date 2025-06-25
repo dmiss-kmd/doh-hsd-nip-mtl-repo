@@ -7,7 +7,7 @@ config {
         rowConditions: ["vaxtype IN (SELECT vaxtype FROM nip_mtl_staging.tbl_vaxtype)"]
     },
      bigquery: {
-      partitionBy: "_PARTITIONDATE",
+      partitionBy: "extract_date",
       clusterBy: ["warehousecode", "vaxtype", "lotno"]
     },
    
@@ -35,7 +35,7 @@ WITH
 chd_raw as
 (
   SELECT
-    extract_date,
+    SAFE_CAST(PARSE_DATE("%Y-%b-%d",extract_date) AS date) AS extract_date,
     region_psgc,
     region,
     provhuc_psgc,
@@ -46,7 +46,7 @@ chd_raw as
     productcode,
     productdesc,
     lotno,
-    expiry_date,
+    SAFE_CAST(PARSE_DATE("%Y-%b-%d",expiry_date) AS date) AS expiry_date,
     balanceqty,
     qtyindoses
   FROM

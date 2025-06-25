@@ -8,7 +8,7 @@ config {
         ,"vaxtype IN (SELECT vaxtype FROM nip_mtl_staging.tbl_vaxtype)"]
     },
     bigquery: {
-      partitionBy: "extract_date",
+      partitionBy: "DATE_TRUNC(_PARTITIONTIME,MONTH)",
       clusterBy: ["warehousecode", "vaxtype", "lotno"]
     },
    

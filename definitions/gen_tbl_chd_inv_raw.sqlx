@@ -4,7 +4,8 @@ config {
     schema: "nip_mtl_staging", // Specify the dataset
     assertions:{
         nonNull: ["warehousecode", "vaxtype", "extract_date"],
-        rowConditions: ["vaxtype IN (SELECT vaxtype FROM nip_mtl_staging.tbl_vaxtype)"]
+        rowConditions: ["vaxtype IN (SELECT vaxtype FROM nip_mtl_staging.tbl_vaxtype)"
+        ,"rowhash NOT IN (SELECT rowhash from nip_mtl_staging.tbl_chd_inv_raw)"]
     },
      bigquery: {
       partitionBy: "extract_date",

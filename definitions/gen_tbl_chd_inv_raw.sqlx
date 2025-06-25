@@ -7,7 +7,10 @@ config {
         rowConditions: ["rowhash NOT IN (SELECT rowhash FROM nip_mtl_staging.tbl_chd_inv_raw)"
         ,"vaxtype IN (SELECT vaxtype FROM nip_mtl_staging.tbl_vaxtype)"]
     },
-    
+     bigquery: {
+      partitionBy: "extract_date",
+      clusterBy: ["warehousecode", "vaxtype", "lotno"]
+    },
    
     columns: {
         extract_date: tbldef.extract_date,

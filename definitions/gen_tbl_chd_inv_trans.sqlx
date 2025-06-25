@@ -3,11 +3,11 @@ config {
     name: "tbl_chd_inv_trans",
     schema: "nip_mtl_staging", // Specify the dataset
     assertions:{
-        nonNull: ["warehousecode", "vaxtype"],
+        nonNull: ["warehousecode", "vaxtype", "extract_date"],
         rowConditions: ["vaxtype IN (SELECT vaxtype FROM nip_mtl_staging.tbl_vaxtype)"]
     },
     bigquery: {
-      partitionBy: "extract_date",
+      partitionBy: "CAST(PARSE_DATE('%Y-%b-%d',extract_date) AS date)",
       clusterBy: ["warehousecode", "vaxtype", "lotno"]
     },
    

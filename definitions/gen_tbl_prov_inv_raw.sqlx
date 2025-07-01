@@ -37,7 +37,7 @@ WITH
 prov_raw as
 (
   SELECT
-    extract_date,
+    SAFE_CAST(PARSE_DATE("%Y-%b-%d",extract_date) AS date) AS extract_date,
     region_psgc,
     region,
     provhuc_psgc,
@@ -48,7 +48,7 @@ prov_raw as
     productcode,
     productdesc,
     lotno,
-    expiry_date,
+    SAFE_CAST(PARSE_DATE("%Y-%b-%d",expiry_date) AS date) AS expiry_date,
     balanceqty,
     qtyindoses
   FROM

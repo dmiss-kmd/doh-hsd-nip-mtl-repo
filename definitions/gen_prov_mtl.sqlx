@@ -5,7 +5,7 @@ config {
     assertions:{
         nonNull: ["provhuc_psgc", "vaxtype"]
     },
-    dependencies: ["tbl_prov_annual_req","tbl_prov_inv_trans"], //dependency tables
+    dependencies: ["nip_mtl_staging_tbl_prov_inv_trans_assertions_rowConditions"], //dependency tables
     columns: {
         // extract_date: tbldef.extract_date,
         // region_psgc: tbldef.region_psgc,
@@ -44,6 +44,6 @@ SELECT
     date_diff(b.expiry_date, b.extract_date, DAY) as days_to_expire
 FROM
     ${ref("tbl_prov_annual_req")} a
-LEFT JOIN ${ref("tbl_prov_inv_trans")} b
+LEFT JOIN ${ref("nip_mtl_staging_tbl_prov_inv_trans_assertions_rowConditions")} b
 ON a.provhuc_psgc = b.provhuc_psgc
 AND a.vaxtype = b.vaxtype

@@ -2,10 +2,11 @@ config {
     type: "incremental", //Try changing to "table" instead.
     name: "tbl_prov_inv_raw",
     schema: "nip_mtl_staging", // Specify the dataset
+    dependencies: ['tbl_vaxtype'],
     assertions:{
         nonNull: ["provhuc_psgc", "vaxtype"],
-        rowConditions: ["rowhash NOT IN (SELECT rowhash FROM nip_mtl_staging.tbl_prov_inv_raw)"
-        ,"vaxtype IN (SELECT vaxtype FROM nip_mtl_staging.tbl_vaxtype)"]
+        rowConditions: ["vaxtype IN (SELECT vaxtype FROM nip_mtl_staging.tbl_vaxtype)"
+        ,"rowhash NOT IN (SELECT rowhash from nip_mtl_staging.tbl_chd_inv_raw)"]
     },
     bigquery: {
       partitionBy: "extract_date",
@@ -36,7 +37,7 @@ WITH
 prov_raw as
 (
   SELECT
-    extract_date,
+    SAFE_CAST(PARSE_DATE("%Y-%b-%d",extract_date) AS date) AS extract_date,
     region_psgc,
     region,
     provhuc_psgc,
@@ -47,7 +48,7 @@ prov_raw as
     productcode,
     productdesc,
     lotno,
-    expiry_date,
+    SAFE_CAST(PARSE_DATE("%Y-%b-%d",expiry_date) AS date) AS expiry_date,
     balanceqty,
     qtyindoses
   FROM

@@ -2,7 +2,7 @@ config {
     type: "incremental", //Try changing to "table" instead.
     name: "tbl_chd_inv_trans",
     schema: "nip_mtl_staging", // Specify the dataset
-    dependencies: ["tbl_chd_inv_raw"],
+    dependencies: ["nip_mtl_staging_tbl_chd_inv_raw_assertions_rowConditions"],
     assertions:{
         nonNull: ["warehousecode", "vaxtype", "extract_date"],
         rowConditions: ["vaxtype NOT IN (SELECT vaxtype FROM nip_mtl_staging.tbl_vaxtype)"]
@@ -51,7 +51,7 @@ chd_trans as
     SUM(balanceqty) as balanceqty,
     SUM(qtyindoses) AS available_doses
   FROM
-    ${ref("tbl_chd_inv_raw")}
+    ${ref("nip_mtl_staging_tbl_chd_inv_raw_assertions_rowConditions")}
   GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12
   Having extract_date = max(extract_date)
 )

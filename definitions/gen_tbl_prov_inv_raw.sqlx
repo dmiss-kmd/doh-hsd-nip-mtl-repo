@@ -57,5 +57,20 @@ prov_raw as
 
 SELECT
   *,
-  SHA1( CONCAT( IFNULL(safe_cast(extract_date as STRING),""), IFNULL(region_psgc,""), IFNULL(region,""), IFNULL(provhuc_psgc,""), IFNULL(prov_huc,""), IFNULL(warehousecode,""), IFNULL(warehousename,""), IFNULL(vaxtype,""), IFNULL(productcode,""), IFNULL(vaxtype,""), IFNULL(productdesc,""), IFNULL(lotno,""), IFNULL(safe_cast(expiry_date as string),""), IFNULL(balanceqty,0), IFNULL(qtyindoses,0)) ) AS rowhash
+  sha1(to_json_string( STRUCT(
+      format_date("%Y-%b-%d", extract_date) as extract_date,
+      region_psgc,
+      region,
+      provhuc_psgc,
+      prov_huc,
+      warehousecode,
+      warehousename,
+      vaxtype,
+      productcode,
+      productdesc,
+      lotno,
+      format_date("%Y-%b-%d", expiry_date) as expiry_date,
+      balanceqty,
+      qtyindoses)
+    ) ) as rowhash
 FROM prov_raw

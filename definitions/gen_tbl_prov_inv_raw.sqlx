@@ -10,7 +10,7 @@ config {
     },
     bigquery: {
       partitionBy: "extract_date",
-      clusterBy: ["warehousecode", "vaxtype", "lotno"]
+      clusterBy: ["provhuc_psgc", "vaxtype", "lotno"]
     },
    
     columns: {

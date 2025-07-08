@@ -2,7 +2,7 @@ config {
     type: "incremental", //Try changing to "table" instead.
     name: "tbl_prov_inv_raw",
     schema: "nip_mtl_staging", // Specify the dataset
-    dependencies: ['tbl_vaxtype'],
+    dependencies: ['tbl_vaxtype','tbl_prov_inv_staging'],
     assertions:{
         nonNull: ["provhuc_psgc", "vaxtype"],
         rowConditions: ["vaxtype IN (SELECT vaxtype FROM nip_mtl_staging.tbl_vaxtype)"

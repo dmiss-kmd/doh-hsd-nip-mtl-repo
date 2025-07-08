@@ -5,12 +5,12 @@ config {
     dependencies: ["nip_mtl_staging_tbl_prov_inv_raw_assertions_rowConditions"],
     assertions:{
         nonNull: ["provhuc_psgc", "vaxtype", "extract_date"],
-        rowConditions: ["vaxtype NOT IN (SELECT vaxtype FROM nip_mtl_staging.tbl_vaxtype)"
+        rowConditions: ["vaxtype IN (SELECT vaxtype FROM nip_mtl_staging.tbl_vaxtype)"
         ,"rowhash not in (SELECT rowhash from nip_mtl_staging.tbl_prov_inv_trans)"]
     },
     bigquery: {
       partitionBy: "extract_date",
-      clusterBy: ["warehousecode", "vaxtype", "lotno"]
+      clusterBy: ["provhuc_psgc", "vaxtype", "lotno"]
     },
    
     columns: {

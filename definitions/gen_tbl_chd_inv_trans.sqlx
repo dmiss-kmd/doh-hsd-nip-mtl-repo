@@ -5,7 +5,7 @@ config {
     dependencies: ["nip_mtl_staging_tbl_chd_inv_raw_assertions_rowConditions"],
     assertions:{
         nonNull: ["warehousecode", "vaxtype", "extract_date"],
-        rowConditions: ["vaxtype NOT IN (SELECT vaxtype FROM nip_mtl_staging.tbl_vaxtype)"
+        rowConditions: ["vaxtype IN (SELECT vaxtype FROM nip_mtl_staging.tbl_vaxtype)"
         ,"rowhash not in (SELECT rowhash from nip_mtl_staging.tbl_chd_inv_trans)"]
     },
     bigquery: {

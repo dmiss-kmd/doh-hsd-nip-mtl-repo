@@ -4,8 +4,9 @@ config {
     schema: "nip_mtl_staging", // Specify the dataset
     dependencies: ['tbl_vaxtype'],
     assertions:{
-        nonNull: ["warehousecode", "vaxtype"],
-        rowConditions: ["vaxtype IN (SELECT vaxtype FROM nip_mtl_staging.tbl_vaxtype)"]
+        nonNull: ["warehousecode", "vaxtype", "lotno"],
+        rowConditions: ["vaxtype IN (SELECT vaxtype FROM nip_mtl_staging.tbl_vaxtype)"
+        ,"rowhash not in (SELECT rowhash from nip_mtl_staging.tbl_chd_inv_raw)"]
     },
     bigquery: {
       partitionBy: "extract_date",
@@ -33,7 +34,7 @@ config {
 
 
 WITH 
-prov_raw as
+chd_raw as
 (
   SELECT
     SAFE_CAST(PARSE_DATE("%Y-%b-%d",extract_date) AS date) AS extract_date,
@@ -72,5 +73,5 @@ prov_raw as
 
 SELECT
   *
-FROM prov_raw
+FROM chd_raw
 WHERE rowhash NOT IN (SELECT rowhash FROM  nip_mtl_staging.tbl_chd_inv_raw)

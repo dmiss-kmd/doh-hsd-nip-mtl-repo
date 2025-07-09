@@ -13,7 +13,7 @@ config {
         // provhuc_psgc:  tbldef.provhuc_psgc,
         // prov_huc:  tbldef.prov_huc,
         warehousecode: tbldef.warehousecode,
-        warehousename: tbldef.warehousename,
+        // warehousename: tbldef.warehousename,
         vaxtype: tbldef.vaxtype,
         annual_required_dose: tbldef.annual_required_dose,
         monthly_required_dose: tbldef.monthly_required_dose,

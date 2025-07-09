@@ -12,7 +12,7 @@ config {
         // region: tbldef.region,
         provhuc_psgc:  tbldef.provhuc_psgc,
         // prov_huc:  tbldef.prov_huc,
-        warehousecode: tbldef.warehousecode,
+        // warehousecode: tbldef.warehousecode,
         // warehousename: tbldef.warehousename,
         vaxtype: tbldef.vaxtype,
         annual_required_dose: tbldef.annual_required_dose,
@@ -32,7 +32,7 @@ config {
 
 SELECT
     a.provhuc_psgc,
-    b.warehousecode,
+    -- b.warehousecode,
     -- UPPER(TRIM(a.prov_huc)) AS warehousename,
     a.vaxtype,
     a.qtyindoses AS annual_required_dose,

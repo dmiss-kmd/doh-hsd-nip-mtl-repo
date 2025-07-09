@@ -31,7 +31,6 @@ config {
 }
 
 SELECT
-    b.extract_date,
     b.provhuc_psgc,
     b.warehousecode,
     -- UPPER(TRIM(a.prov_huc)) AS warehousename,

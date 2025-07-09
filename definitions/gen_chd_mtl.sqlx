@@ -31,7 +31,6 @@ config {
 }
 
 SELECT
-    b.extract_date,
     b.region_psgc,
     b.warehousecode,
     -- UPPER(TRIM(a.warehousename)) AS warehousename,

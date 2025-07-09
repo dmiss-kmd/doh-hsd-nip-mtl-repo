@@ -73,7 +73,7 @@ prov_trans as
       SUM(qtyindoses) AS available_doses,
       
     FROM
-      ${ref("nip_mtl_staging_tbl_prov_inv_raw_assertions_rowConditions")}
+      ${ref("tbl_prov_inv_raw")}
     GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12
   )
   

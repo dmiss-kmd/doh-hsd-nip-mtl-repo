@@ -44,6 +44,6 @@ SELECT
     b.days_to_expire
 FROM
     ${ref("tbl_chd_annual_req")} a
-LEFT JOIN ${ref("nip_mtl_staging_tbl_chd_inv_trans_assertions_rowConditions")} b
+LEFT JOIN ${ref("tbl_chd_inv_trans")} b
 ON a.warehousecode = b.warehousecode
 AND a.vaxtype = b.vaxtype

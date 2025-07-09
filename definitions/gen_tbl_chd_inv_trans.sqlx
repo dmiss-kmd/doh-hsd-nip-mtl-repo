@@ -2,10 +2,10 @@ config {
     type: "incremental", //Try changing to "table" instead.
     name: "tbl_chd_inv_trans",
     schema: "nip_mtl_staging", // Specify the dataset
-    dependencies: ["tbl_chd_inv_raw"],
+    dependencies: ["nip_mtl_staging_tbl_chd_inv_raw_assertions_rowConditions"],
     assertions:{
         nonNull: ["warehousecode", "vaxtype", "extract_date"],
-        rowConditions: ["vaxtype NOT IN (SELECT vaxtype FROM nip_mtl_staging.tbl_vaxtype)"]
+        rowConditions: ["vaxtype IN (SELECT vaxtype FROM nip_mtl_staging.tbl_vaxtype)"]
     },
     bigquery: {
       partitionBy: "extract_date",
@@ -36,28 +36,50 @@ WITH
 chd_trans as
 (
   SELECT
-    extract_date,
-    region_psgc,
-    UPPER(TRIM(region)) AS region,
-    provhuc_psgc,
-    UPPER(TRIM(prov_huc)) AS prov_huc,
-    warehousecode,
-    UPPER(TRIM(warehousename)) AS warehousename,
-    vaxtype,
-    productcode,
-    productdesc,
-    lotno,
-    expiry_date,
-    SUM(balanceqty) as balanceqty,
-    SUM(qtyindoses) AS available_doses
-  FROM
-    ${ref("tbl_chd_inv_raw")}
-  GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12
-  Having extract_date = max(extract_date)
+    *,
+    date_diff(expiry_date, extract_date,  DAY) days_to_expire,
+    sha1(to_json_string( STRUCT(
+      extract_date,
+      region_psgc,
+      region,
+      provhuc_psgc,
+      prov_huc,
+      warehousecode,
+      warehousename,
+      vaxtype,
+      productcode,
+      productdesc,
+      lotno,
+      expiry_date,
+      balanceqty,
+      available_doses)
+    ) ) as rowhash
+  FROM 
+  (
+    SELECT
+      extract_date,
+      region_psgc,
+      UPPER(TRIM(region)) AS region,
+      provhuc_psgc,
+      UPPER(TRIM(prov_huc)) AS prov_huc,
+      warehousecode,
+      UPPER(TRIM(warehousename)) AS warehousename,
+      vaxtype,
+      productcode,
+      productdesc,
+      lotno,
+      expiry_date,
+      SUM(balanceqty) as balanceqty,
+      SUM(qtyindoses) AS available_doses,
+      
+    FROM
+      ${ref("tbl_chd_inv_raw")}
+    GROUP BY 1,2,3,4,5,6,7,8,9,10,11,12
+  )
+  
 )
 
 SELECT
-  *,
-  date_diff(expiry_date, extract_date,  DAY) days_to_expire,
-  -- SHA1( CONCAT( IFNULL(safe_cast(extract_date as STRING),""), IFNULL(region_psgc,""), IFNULL(region,""), IFNULL(provhuc_psgc,""), IFNULL(prov_huc,""), IFNULL(warehousecode,""), IFNULL(warehousename,""), IFNULL(vaxtype,""), IFNULL(productcode,""), IFNULL(vaxtype,""), IFNULL(productdesc,""), IFNULL(lotno,""), IFNULL(safe_cast(expiry_date as string),""), IFNULL(balanceqty,0), IFNULL(available_doses,0)) ) AS rowhash
+  *
 FROM chd_trans
+WHERE rowhash NOT IN (SELECT rowhash FROM  nip_mtl_staging.tbl_chd_inv_trans)

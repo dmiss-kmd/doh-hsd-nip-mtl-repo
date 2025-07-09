@@ -8,7 +8,7 @@ config {
     dependencies: ["nip_mtl_staging_tbl_chd_inv_trans_assertions_rowConditions"], //dependency tables
     columns: {
         extract_date: tbldef.extract_date,
-        region_psgc: tbldef.region_psgc,
+        //region_psgc: tbldef.region_psgc,
         // region: tbldef.region,
         // provhuc_psgc:  tbldef.provhuc_psgc,
         // prov_huc:  tbldef.prov_huc,
@@ -31,8 +31,8 @@ config {
 }
 
 SELECT
-    b.region_psgc,
-    b.warehousecode,
+    -- b.region_psgc,
+    a.warehousecode,
     -- UPPER(TRIM(a.warehousename)) AS warehousename,
     a.vaxtype,
     a.qtyindoses AS annual_required_dose,

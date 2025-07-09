@@ -31,7 +31,7 @@ config {
 }
 
 SELECT
-    b.provhuc_psgc,
+    a.provhuc_psgc,
     b.warehousecode,
     -- UPPER(TRIM(a.prov_huc)) AS warehousename,
     a.vaxtype,

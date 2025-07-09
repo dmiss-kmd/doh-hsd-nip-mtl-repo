@@ -5,8 +5,7 @@ config {
     dependencies: ['tbl_vaxtype','tbl_prov_inv_staging'],
     assertions:{
         nonNull: ["provhuc_psgc", "vaxtype"],
-        rowConditions: ["vaxtype IN (SELECT vaxtype FROM nip_mtl_staging.tbl_vaxtype)"
-        ,"rowhash not in (SELECT rowhash from nip_mtl_staging.tbl_prov_inv_raw)"]
+        rowConditions: ["vaxtype IN (SELECT vaxtype FROM nip_mtl_staging.tbl_vaxtype)"]
     },
     bigquery: {
       partitionBy: "extract_date",

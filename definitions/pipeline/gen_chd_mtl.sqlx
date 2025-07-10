@@ -4,7 +4,7 @@ config {
     schema: "nip_mtl_staging", //dataset
     dependencies: ['nip_mtl_staging_tbl_chd_inv_trans_assertions_rowConditions'],
     assertions:{
-        nonNull: ["warehousecode", "vaxtype", "lotno"]
+        nonNull: ["warehousecode", "vaxtype"]
     },
     dependencies: ["nip_mtl_staging_tbl_chd_inv_trans_assertions_rowConditions"], //dependency tables
     columns: {

@@ -1,8 +1,8 @@
-declare({
-  database: "doh-hsd",
-  schema: "nip_mtl_staging",
-  name: "tbl_vaxtype",
-});
+// declare({
+//   database: "doh-hsd",
+//   schema: "nip_mtl_staging",
+//   name: "tbl_vaxtype",
+// });
 
 // declare({
 //   database: "doh-hsd",

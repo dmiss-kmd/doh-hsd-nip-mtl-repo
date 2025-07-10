@@ -42,4 +42,4 @@ FROM
     ${ref("tbl_prov_inv_CSV")})
 WHERE
   rowhash not in (SELECT rowhash FROM nip_mtl_staging.tbl_prov_inv_staging)
-  AND vaxtype IN (SELECT vaxtype FROM ${("tbl_vaxtype")})
+  AND vaxtype IN (SELECT vaxtype FROM nip_mtl_staging.tbl_vaxtype)

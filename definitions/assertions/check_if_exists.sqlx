@@ -1,0 +1,43 @@
+config {
+  type: "assertion",
+  name: "check_if_record_exists"
+}
+
+SELECT 
+  *
+FROM
+  (SELECT
+    extract_date,
+    region_psgc,
+    region,
+    provhuc_psgc,
+    prov_huc,
+    warehousecode,
+    warehousename,
+    vaxtype,
+    productcode,
+    productdesc,
+    lotno,
+    expiry_date,
+    balanceqty,
+    qtyindoses,
+    sha1(to_json_string( STRUCT(
+      extract_date,
+      region_psgc,
+      region,
+      provhuc_psgc,
+      prov_huc,
+      warehousecode,
+      warehousename,
+      vaxtype,
+      productcode,
+      productdesc,
+      lotno,
+      expiry_date,
+      balanceqty,
+      qtyindoses)
+    ) ) as rowhash
+  FROM
+    ${ref("tbl_prov_inv_staging")})
+WHERE
+  rowhash not in (SELECT rowhash FROM nip_mtl_staging.tbl_prov_inv_raw)

@@ -72,4 +72,3 @@ chd_inv as
 SELECT
   *
 FROM chd_inv
-WHERE rowhash NOT IN (SELECT rowhash FROM  nip_mtl_staging.tbl_prov_inv_staging)

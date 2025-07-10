@@ -1,6 +1,6 @@
 config {
   type: "assertion",
-  name: "check_if_record_exists"
+  name: "check_if_record_exists_prov"
 }
 
 SELECT 

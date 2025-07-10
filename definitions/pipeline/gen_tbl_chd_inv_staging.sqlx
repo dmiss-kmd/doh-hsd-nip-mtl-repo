@@ -24,7 +24,11 @@ config {
         qtyindoses:  tbldef.available_doses, 
         rowhash: tbldef.rowhash
     }
+    
 }
+post_operations {
+    TRUNCATE TABLE ${self()};
+  }
 
 
 WITH 

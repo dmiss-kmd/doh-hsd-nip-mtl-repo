@@ -26,6 +26,9 @@ config {
     }
 }
 
+post_operations {
+  TRUNCATE TABLE ${self()};
+}
 
 WITH 
 chd_inv as

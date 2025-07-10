@@ -7,7 +7,7 @@ SELECT
   *
 FROM
   (SELECT
-    extract_date,
+    extracted_date,
     region_psgc,
     region,
     provhuc_psgc,
@@ -22,7 +22,7 @@ FROM
     balanceqty,
     qtyindoses,
     sha1(to_json_string( STRUCT(
-      extract_date,
+      extracted_date,
       region_psgc,
       region,
       provhuc_psgc,
@@ -38,6 +38,6 @@ FROM
       qtyindoses)
     ) ) as rowhash
   FROM
-    ${ref("tbl_prov_inv_staging")})
+    ${ref("tbl_prov_inv_CSV")})
 WHERE
   rowhash not in (SELECT rowhash FROM nip_mtl_staging.tbl_prov_inv_raw)

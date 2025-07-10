@@ -1,0 +1,43 @@
+config {
+  type: "assertion",
+  name: "check_if_record_exists_chd"
+}
+
+SELECT 
+  *
+FROM
+  (SELECT
+    extracted_date,
+    region_psgc,
+    region,
+    provhuc_psgc,
+    prov_huc,
+    warehousecode,
+    warehousename,
+    vaxtype,
+    productcode,
+    productdesc,
+    lotno,
+    expiry_date,
+    balanceqty,
+    qtyindoses,
+    sha1(to_json_string( STRUCT(
+      extracted_date,
+      region_psgc,
+      region,
+      provhuc_psgc,
+      prov_huc,
+      warehousecode,
+      warehousename,
+      vaxtype,
+      productcode,
+      productdesc,
+      lotno,
+      expiry_date,
+      balanceqty,
+      qtyindoses)
+    ) ) as rowhash
+  FROM
+    ${ref("tbl_chd_inv_CSV")})
+WHERE
+  rowhash not in (SELECT rowhash FROM nip_mtl_staging.tbl_chd_inv_raw)

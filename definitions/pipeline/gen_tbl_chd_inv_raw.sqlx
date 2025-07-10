@@ -2,7 +2,7 @@ config {
     type: "incremental", //Try changing to "table" instead.
     name: "tbl_chd_inv_raw",
     schema: "nip_mtl_staging", // Specify the dataset
-    dependencies: ['tbl_vaxtype','tbl_chd_inv_staging'],
+    dependencies: ['check_if_record_exists_chd'],
     assertions:{
         nonNull: ["warehousecode", "vaxtype", "lotno"],
         rowConditions: ["vaxtype IN (SELECT vaxtype FROM nip_mtl_staging.tbl_vaxtype)"]
@@ -36,7 +36,7 @@ WITH
 chd_raw as
 (
   SELECT
-    SAFE_CAST(PARSE_DATE("%Y-%b-%d",extract_date) AS date) AS extract_date,
+    SAFE_CAST(PARSE_DATE("%Y-%b-%d",extracted_date) AS date) AS extract_date,
     region_psgc,
     region,
     provhuc_psgc,
@@ -51,7 +51,7 @@ chd_raw as
     balanceqty,
     qtyindoses,
     sha1(to_json_string( STRUCT(
-      extract_date,
+      extracted_date,
       region_psgc,
       region,
       provhuc_psgc,
@@ -67,7 +67,8 @@ chd_raw as
       qtyindoses)
     ) ) as rowhash
   FROM
-    ${ref("tbl_chd_inv_staging")}
+    -- ${ref("tbl_chd_inv_CSV")}
+    nip_mtl_staging.tbl_chd_inv_CSV
 )
 
 SELECT

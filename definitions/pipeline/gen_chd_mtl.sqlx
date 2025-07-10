@@ -37,7 +37,7 @@ SELECT
     -- UPPER(TRIM(a.warehousename)) AS warehousename,
     a.vaxtype,
     a.qtyindoses AS annual_required_dose,
-    ROUND((a.qtyindoses/12),1) as monthly_required_dose,
+    (a.qtyindoses/12) as monthly_required_dose,
     a.warehousecode,
     b.lotno,
     b.extract_date,

@@ -32,11 +32,12 @@ config {
 
 SELECT
     -- b.region_psgc,
-    a.warehousecode,
+    -- a.warehousecode,
     -- UPPER(TRIM(a.warehousename)) AS warehousename,
     a.vaxtype,
     a.qtyindoses AS annual_required_dose,
     ROUND((a.qtyindoses/12),1) as monthly_required_dose,
+    b.warehousecode,
     b.lotno,
     b.extract_date,
     b.expiry_date,

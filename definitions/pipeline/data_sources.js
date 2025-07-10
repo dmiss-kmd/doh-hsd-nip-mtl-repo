@@ -16,6 +16,17 @@ declare({
   name: "tbl_prov_inv_staging",
 });
 
+declare({
+  database: "doh-hsd",
+  schema: "nip_mtl_staging",
+  name: "tbl_chd_inv_CSV",
+});
+
+declare({
+  database: "doh-hsd",
+  schema: "nip_mtl_staging",
+  name: "tbl_prov_inv_CSV",
+});
 
 
 declare({

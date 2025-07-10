@@ -2,8 +2,9 @@ config {
     type: "view",
     name: "vw_chd_mtl", //name of view
     schema: "nip_mtl_staging", //dataset
+    dependencies: ['nip_mtl_staging_tbl_chd_inv_trans_assertions_rowConditions'],
     assertions:{
-        nonNull: ["warehousecode", "vaxtype"]
+        nonNull: ["warehousecode", "vaxtype", "lotno"]
     },
     dependencies: ["nip_mtl_staging_tbl_chd_inv_trans_assertions_rowConditions"], //dependency tables
     columns: {
@@ -45,7 +46,7 @@ SELECT
     nip_mtl_staging.compute_mtl(b.available_doses, a.qtyindoses, b.expiry_date, b.extract_date) AS MTL,
     b.days_to_expire
 FROM
-    ${ref("tbl_chd_annual_req")} a
-LEFT JOIN ${ref("tbl_chd_inv_trans")} b
+    nip_mtl_staging.tbl_chd_annual_req a
+LEFT JOIN nip_mtl_staging.tbl_chd_inv_trans b
 ON a.warehousecode = b.warehousecode
 AND a.vaxtype = b.vaxtype

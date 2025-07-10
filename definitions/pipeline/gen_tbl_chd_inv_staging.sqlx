@@ -1,8 +1,8 @@
 config {
-    type: "incremental", //Try changing to "table" instead.
-    name: "tbl_chd_inv_raw",
+    type: "table", //Try changing to "table" instead.
+    name: "tbl_chd_inv_staging",
     schema: "nip_mtl_staging", // Specify the dataset
-    dependencies: ['nip_mtl_staging_tbl_chd_inv_staging_assertions_rowConditions'],
+    dependencies: ['check_if_record_exists_chd'],
     assertions:{
         nonNull: ["warehousecode", "vaxtype", "lotno"]
     },
@@ -32,7 +32,7 @@ config {
 
 
 WITH 
-chd_raw as
+chd_inv as
 (
   SELECT
     SAFE_CAST(PARSE_DATE("%Y-%b-%d",extracted_date) AS date) AS extract_date,
@@ -72,5 +72,5 @@ chd_raw as
 
 SELECT
   *
-FROM chd_raw
-WHERE rowhash NOT IN (SELECT rowhash FROM  nip_mtl_staging.tbl_chd_inv_raw)
+FROM chd_inv
+WHERE rowhash NOT IN (SELECT rowhash FROM  nip_mtl_staging.tbl_chd_inv_staging)

@@ -41,5 +41,5 @@ FROM
   FROM
     ${ref("tbl_chd_inv_CSV")})
 WHERE
-  rowhash not in (SELECT rowhash FROM nip_mtl_staging.tbl_chd_inv_staging)
-  AND vaxtype not IN (SELECT vaxtype FROM nip_mtl_staging.tbl_vaxtype)
+  rowhash in (SELECT rowhash FROM nip_mtl_staging.tbl_chd_inv_staging)
+  OR vaxtype not IN (SELECT vaxtype FROM nip_mtl_staging.tbl_vaxtype)

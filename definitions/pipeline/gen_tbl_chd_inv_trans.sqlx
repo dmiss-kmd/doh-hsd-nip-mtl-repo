@@ -1,5 +1,5 @@
 config {
-    type: "incremental", //Try changing to "table" instead.
+    type: "table", //Try changing to "table" instead.
     name: "tbl_chd_inv_trans",
     schema: "nip_mtl_staging", // Specify the dataset
     dependencies: ["nip_mtl_staging_tbl_chd_inv_raw_assertions_rowConditions"],

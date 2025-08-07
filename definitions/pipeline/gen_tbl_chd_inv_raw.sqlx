@@ -67,7 +67,7 @@ chd_raw as
     ) ) as rowhash
   FROM
     -- ${ref("tbl_chd_inv_CSV")}
-    nip_mtl_staging.tbl_chd_inv_CSV
+    nip_mtl_staging.tbl_chd_inv_csv_aug
 )
 
 SELECT
